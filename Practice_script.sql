@@ -1,0 +1,175 @@
+CREATE DATABASE KISP;
+USE KISP;
+
+CREATE TABLE `PATIENTS` (
+	`PATIENT_NAME` varchar(50),
+	`DOB` DATE,
+	`GENDER` varchar(1) NOT NULL,
+	`PASSPORT` bigint(10),
+	`ADDRESS` varchar(100),
+	`TEL_NUMB` varchar(12),
+	`PATIENT_ID` varchar(5) NOT NULL,
+	`ANNOTATION` varchar(100) NOT NULL,
+	PRIMARY KEY (`PATIENT_ID`)
+);
+
+CREATE TABLE `DOCTORS` (
+	`DOCTOR_NAME` varchar(50) NOT NULL,
+	`DOCTOR_ID` varchar(3) NOT NULL,
+	`NICKNAME` varchar(15) NOT NULL,
+	`PASSWORD_` varchar(10) NOT NULL,
+	`E_MAIL` varchar(30) NOT NULL,
+	`DOC_SPEC` varchar(30) NOT NULL,
+	`APPOIMENT` varchar(50) NOT NULL,
+	PRIMARY KEY (`DOCTOR_ID`)
+);
+
+CREATE TABLE `HOSPITAL` (
+	`PATIENT` varchar(5) NOT NULL,
+	`START_H` DATE NOT NULL,
+	`FINISH_H` DATE
+);
+
+CREATE TABLE `PROCEDURES` (
+	`PATIENT` varchar(5) NOT NULL,
+    `DOCTOR` varchar(3) NOT NULL,
+	`PROC_ID` INT NOT NULL,
+	`PROC_DESCRIPT` varchar(100) NOT NULL,
+	`PROC_DATE` DATE NOT NULL,
+	PRIMARY KEY (`PROC_ID`)
+);
+
+CREATE TABLE `OPERATION` (
+	`PATIENT` varchar(5) NOT NULL,
+	`DOCTOR` varchar(3) NOT NULL,
+	`OPER_ID` varchar(4) NOT NULL,
+	`OPER_DESCRIPT` varchar(100) NOT NULL,
+	`OPER_DATE` DATE NOT NULL,
+	PRIMARY KEY (`OPER_ID`)
+);
+
+CREATE TABLE `SURVEYS` (
+	`PATIENT` varchar(5) NOT NULL,
+	`DOCTOR` varchar(3) NOT NULL,
+	`SURV_ID` INT NOT NULL,
+	`SURV_DESCRIPT` varchar(100) NOT NULL,
+	`SURV_DATE` DATE NOT NULL,
+	PRIMARY KEY (`SURV_ID`)
+);
+
+CREATE TABLE `CONSULTATIONS` (
+	`PATIENT` varchar(5) NOT NULL,
+	`DOCTOR` varchar(3) NOT NULL,
+	`COMPLAINT` varchar(100) NOT NULL,
+	`REG_DATE` DATE NOT NULL,
+    `OPER` varchar(4) NOT NULL,
+	`PROC` INT NOT NULL,
+	`SURV` INT NOT NULL,
+	`MEDICINE` varchar(100)
+);
+
+ALTER TABLE `HOSPITAL` ADD CONSTRAINT `HOSPITAL_fk0` FOREIGN KEY (`PATIENT`) REFERENCES `PATIENTS`(`PATIENT_ID`);
+
+ALTER TABLE `PROCEDURES` ADD CONSTRAINT `PROCEDURES_fk0` FOREIGN KEY (`DOCTOR`) REFERENCES `DOCTORS`(`DOCTOR_ID`);
+
+ALTER TABLE `PROCEDURES` ADD CONSTRAINT `PROCEDURES_fk1` FOREIGN KEY (`PATIENT`) REFERENCES `PATIENTS`(`PATIENT_ID`);
+
+ALTER TABLE `OPERATION` ADD CONSTRAINT `OPERATION_fk0` FOREIGN KEY (`PATIENT`) REFERENCES `PATIENTS`(`PATIENT_ID`);
+
+ALTER TABLE `OPERATION` ADD CONSTRAINT `OPERATION_fk1` FOREIGN KEY (`DOCTOR`) REFERENCES `DOCTORS`(`DOCTOR_ID`);
+
+ALTER TABLE `SURVEYS` ADD CONSTRAINT `SURVEYS_fk0` FOREIGN KEY (`PATIENT`) REFERENCES `PATIENTS`(`PATIENT_ID`);
+
+ALTER TABLE `SURVEYS` ADD CONSTRAINT `SURVEYS_fk1` FOREIGN KEY (`DOCTOR`) REFERENCES `DOCTORS`(`DOCTOR_ID`);
+
+ALTER TABLE `CONSULTATIONS` ADD CONSTRAINT `CONSULTATIONS_fk0` FOREIGN KEY (`PATIENT`) REFERENCES `PATIENTS`(`PATIENT_ID`);
+
+ALTER TABLE `CONSULTATIONS` ADD CONSTRAINT `CONSULTATIONS_fk1` FOREIGN KEY (`DOCTOR`) REFERENCES `DOCTORS`(`DOCTOR_ID`);
+
+ALTER TABLE `CONSULTATIONS` ADD CONSTRAINT `CONSULTATIONS_fk2` FOREIGN KEY (`SURV`) REFERENCES `SURVEYS`(`SURV_ID`);
+
+ALTER TABLE `CONSULTATIONS` ADD CONSTRAINT `CONSULTATIONS_fk3` FOREIGN KEY (`PROC`) REFERENCES `PROCEDURES`(`PROC_ID`);
+
+ALTER TABLE `CONSULTATIONS` ADD CONSTRAINT `CONSULTATIONS_fk4` FOREIGN KEY (`OPER`) REFERENCES `OPERATION`(`OPER_ID`);
+ 
+delete from DOCTORS; 
+delete from PATIENTS; 
+delete from CONSULTATIONS; 
+delete from HOSPITAL; 
+delete from PROCEDURES;   
+delete from OPERATION; 
+delete from SURVEYS; 
+commit; 
+
+
+INSERT INTO PATIENTS VALUES('Alex Smith','1977.12.19','m',4611124523,'Moscow, Lenin, 25,4      ','+79270128792','P0001','COPD'); 
+INSERT INTO PATIENTS VALUES('Mary Tarley','1990.10.12','f',4611189765,'Moscow, Tulskaya, 25,5   ','+79270128987','P0002','pneumonia'); 
+INSERT INTO PATIENTS VALUES('Tirion Lanister','1967.04.01','m',null      ,'Moscow, Tatarskaya, 2,3  ','+79168967569','P0003','stroke'); 
+INSERT INTO PATIENTS VALUES('Jack Shepard','1987.05.11','m',9310404722,'Moscow, Kalinina, 3,2    ','+79252624545','P0004','aids'); 
+INSERT INTO PATIENTS VALUES('Hugo Reice','1986.11.15','m',9113505627,'Moscow, Pushkina, 76,3   ','+79168967569','P0005','diarrhea'); 
+INSERT INTO PATIENTS VALUES('Tim Burton','1954.11.11','m',9189645122,'Moscow, Tverskaya, 72,9  ','+79164567569','P0006','cardiac ischemia'); 
+INSERT INTO PATIENTS VALUES('Amanda Cooper','1986.09.26','f',8745056489,'Moscow, Kochetova, 125,23','+79134567845','P0007','tuberculosis'); 
+INSERT INTO PATIENTS VALUES('Kristina Velaskes','1988.11.22','f',9116660273,'Moscow, Yauza, 1,3       ','+79754967569','P0008','lungs cancer'); 
+INSERT INTO PATIENTS VALUES('Tony Stark','1964.02.23','m',8710909566,'Moscow, Kutuzova, 76,9   ','+79168967569','P0009','hypertension'); 
+INSERT INTO PATIENTS VALUES('McCinly Brendon','1990.06.16','m',9212505627,'Moscow, Baltiyskaya, 55,5','+79990554221','P0010','malaria'); 
+INSERT INTO PATIENTS VALUES('George Bouny','1979.01.14','m',9119875657,'Moscow, Malinovaya, 6,2  ','+79268967569','P0011','stomach cancer'); 
+INSERT INTO PATIENTS VALUES('Bus Standly','1908.08.25','m',9885429878,'Moscow, Basmanova, 33,15 ','+79199232353','P0012','hepatitis A'); 
+INSERT INTO PATIENTS VALUES('Sara Tancready','1980.07.15','f',9393503627,'Moscow, Stromynka, 9,8   ','+79332278469','P0013','bronchitis'); 
+commit; 
+
+
+INSERT INTO DOCTORS VALUES('Bill Adams        ','D01','billa    ','qwerty','billadams@mail.ru     ','Therapist         ','Tuesday,Thursday,Friday'); 
+INSERT INTO DOCTORS VALUES('Dan Roberts       ','D02','danr     ','asdfdd','danrob@list.ru        ','Infectious disease','Monday,Wednesday'); 
+INSERT INTO DOCTORS VALUES('Paul Cruz         ','D03','paulc    ','zxcvff','paulcruz@gmail.com    ','Neurologist       ','Tuesday,Thursday,Sunday'); 
+INSERT INTO DOCTORS VALUES('Robert Green      ','D04','robertg  ','sdfgff','montero@mail.ru       ','Cardiologist      ','Tuesday,Wednesday,Sunday'); 
+INSERT INTO DOCTORS VALUES('Christof Struf    ','D05','christofs','werthh','likimia@gmail.com     ','Pulmonologist     ','Monday,Thursday,Saturday'); 
+INSERT INTO DOCTORS VALUES('Emanuel Ditriksons','D06','emanueld ','dfghhh','malakey@list.ru       ','Gastroenterologist','Monday,Friday,Saturday'); 
+INSERT INTO DOCTORS VALUES('Chris Mendes      ','D07','chrism   ','ghjkhh','srtimneg@outlook.com  ','Phthisiatrician   ','Wednesday,Friday,Saturday'); 
+INSERT INTO DOCTORS VALUES('Tom Matthew       ','D08','tomm     ','vbnmgf','tramnar@list.ru       ','Hepatologist      ','Tuesday,Friday,Sunday'); 
+INSERT INTO DOCTORS VALUES('Mike Lou          ','D09','mikel    ','dfghfg','meetrog@mail.com      ','Oncologist        ','Tuesday,Thursday'); 
+INSERT INTO DOCTORS VALUES('George Smith      ','D10','georges  ','erthhf','londinskiy@outlook.com','Surgeon           ','Tuesday,Thursday');
+commit; 
+
+
+INSERT INTO HOSPITAL VALUES('P0001','2016.12.06','2017.04.29');
+INSERT INTO HOSPITAL VALUES('P0002','2016.12.12',NULL);
+INSERT INTO HOSPITAL VALUES('P0003','2017.01.01','2017.03.29');
+INSERT INTO HOSPITAL VALUES('P0004','2017.02.02','2017.03.24');
+INSERT INTO HOSPITAL VALUES('P0005','2017.03.05','2017.06.20');
+INSERT INTO HOSPITAL VALUES('P0006','2017.04.08',NULL);
+INSERT INTO HOSPITAL VALUES('P0007','2017.04.11','2017.05.14');
+INSERT INTO HOSPITAL VALUES('P0008','2017.04.12','2017.06.06');
+INSERT INTO HOSPITAL VALUES('P0009','2017.04.29','2017.05.07');
+INSERT INTO HOSPITAL VALUES('P0010','2017.04.20',NULL);
+INSERT INTO HOSPITAL VALUES('P0011','2017.05.10','2017.06.15');
+INSERT INTO HOSPITAL VALUES('P0012','2017.05.13','2017.07.12');
+INSERT INTO HOSPITAL VALUES('P0013','2017.05.25',NULL);
+commit;
+
+
+INSERT INTO PROCEDURES VALUES('P0001','D05',00001,'Inhalation therapy with antibacterial agent','2017.04.16');
+INSERT INTO PROCEDURES VALUES('P0002','D05',00003,'Inhalations with antibiotics','2017.01.05');
+INSERT INTO PROCEDURES VALUES('P0003','D03',00015,'Electromyostimulation','2017.02.10');
+INSERT INTO PROCEDURES VALUES('P0004','D02',00050,'Polypectomy','2017.04.11');
+commit;
+
+
+INSERT INTO OPERATION VALUES('P0002','D05','0001','pneumonia         ','2017.03.12'); 
+INSERT INTO OPERATION VALUES('P0006','D04','0002','cardiac ischemia  ','2017.07.02'); 
+INSERT INTO OPERATION VALUES('P0001','D05','0003','COPD              ','2017.04.18'); 
+INSERT INTO OPERATION VALUES('P0003','D03','0004','stroke            ','2017.02.19'); 
+INSERT INTO OPERATION VALUES('P0007','D07','0005','tuberculosis      ','2017.03.18'); 
+INSERT INTO OPERATION VALUES('P0008','D10','0006','lungs cancer      ','2017.04.05'); 
+INSERT INTO OPERATION VALUES('P0011','D10','0007','stomach cancer    ','2017.05.11');   
+commit; 
+
+
+INSERT INTO SURVEYS VALUES('P0002','D05',0210,'lack of air','2017.07.02');
+INSERT INTO SURVEYS VALUES('P0006','D04',0031,'Duplex scanning of brachiocephalic arteries','2017.07.02');
+INSERT INTO SURVEYS VALUES('P0007','D07',0021,'Fluorography','2017.03.08');
+INSERT INTO SURVEYS VALUES('P0008','D10',0111,'X-ray','2017.04.04');
+commit;
+ 
+
+INSERT INTO CONSULTATIONS VALUES('P0002','D05','headache','2017.04.16','0001',00001,0210,'Antibiotics'); 
+commit;
